@@ -13,6 +13,10 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 
 const line = "unhinged";
+// Gate check (kit: 1-30 characters): fail loudly instead of shipping a bad entry.
+if (line.length < 1 || line.length > 30) {
+  throw new Error(`entry length ${line.length} outside gate 1-30`);
+}
 const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 mkdirSync(outDir, { recursive: true });
 writeFileSync(`${outDir}/entry.txt`, line, "utf8");
